@@ -1,0 +1,658 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище LibraryModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AnInstance">
+          <Key>
+            <PropertyRef Name="IDAnInstance" />
+          </Key>
+          <Property Name="IDAnInstance" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDStatus" Type="int" Nullable="false" />
+          <Property Name="InventoryNum" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IDBook" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Author">
+          <Key>
+            <PropertyRef Name="IDAuthor" />
+          </Key>
+          <Property Name="IDAuthor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="IDBook" />
+          </Key>
+          <Property Name="IDBook" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDAuthor" Type="int" Nullable="false" />
+          <Property Name="IDPublishing" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="IDGenre" Type="int" Nullable="false" />
+          <Property Name="InventoryNum" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IDInvoice" Type="int" />
+          <Property Name="WriteOffCertificate" Type="int" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="IDGenre" />
+          </Key>
+          <Property Name="IDGenre" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Genre" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="IDInvoice" />
+          </Key>
+          <Property Name="IDInvoice" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumInvoice" Type="int" Nullable="false" />
+          <Property Name="Data" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Password">
+          <Key>
+            <PropertyRef Name="IDPassword" />
+          </Key>
+          <Property Name="IDPassword" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Publishing_House">
+          <Key>
+            <PropertyRef Name="IDPublishing" />
+          </Key>
+          <Property Name="IDPublishing" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PublishingHouse" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Reader">
+          <Key>
+            <PropertyRef Name="IDReader" />
+          </Key>
+          <Property Name="IDReader" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NumberTicket" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DateOfBirth" Type="datetime" Nullable="false" />
+          <Property Name="HomeAdress" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="IDStatus" />
+          </Key>
+          <Property Name="IDStatus" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Subscription">
+          <Key>
+            <PropertyRef Name="IDSubscription" />
+          </Key>
+          <Property Name="IDSubscription" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDReader" Type="int" Nullable="false" />
+          <Property Name="DateOfIssueOfTheBook" Type="datetime" Nullable="false" />
+          <Property Name="SuggestedReturnDate" Type="datetime" Nullable="false" />
+          <Property Name="RealReturnDate" Type="datetime" Nullable="false" />
+          <Property Name="IDAnInstance" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AnInstance_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AnInstance" Type="Self.AnInstance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="IDBook" />
+            </Principal>
+            <Dependent Role="AnInstance">
+              <PropertyRef Name="IDBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AnInstance_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AnInstance" Type="Self.AnInstance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="IDStatus" />
+            </Principal>
+            <Dependent Role="AnInstance">
+              <PropertyRef Name="IDStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Author">
+          <End Role="Author" Type="Self.Author" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Author">
+              <PropertyRef Name="IDAuthor" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="IDAuthor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Genre">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="IDGenre" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="IDGenre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Invoice">
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invoice">
+              <PropertyRef Name="IDInvoice" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="IDInvoice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Publishing_House">
+          <End Role="Publishing_House" Type="Self.Publishing_House" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publishing_House">
+              <PropertyRef Name="IDPublishing" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="IDPublishing" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subscription_AnInstance">
+          <End Role="AnInstance" Type="Self.AnInstance" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Subscription" Type="Self.Subscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnInstance">
+              <PropertyRef Name="IDAnInstance" />
+            </Principal>
+            <Dependent Role="Subscription">
+              <PropertyRef Name="IDAnInstance" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subscription_Reader">
+          <End Role="Reader" Type="Self.Reader" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Subscription" Type="Self.Subscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reader">
+              <PropertyRef Name="IDReader" />
+            </Principal>
+            <Dependent Role="Subscription">
+              <PropertyRef Name="IDReader" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище LibraryModelContainer">
+          <EntitySet Name="AnInstance" EntityType="Self.AnInstance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Author" EntityType="Self.Author" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genre" EntityType="Self.Genre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Password" EntityType="Self.Password" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Publishing_House" EntityType="Self.Publishing_House" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reader" EntityType="Self.Reader" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subscription" EntityType="Self.Subscription" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AnInstance_Book" Association="Self.FK_AnInstance_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="AnInstance" EntitySet="AnInstance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AnInstance_Status" Association="Self.FK_AnInstance_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="AnInstance" EntitySet="AnInstance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Author" Association="Self.FK_Book_Author">
+            <End Role="Author" EntitySet="Author" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Genre" Association="Self.FK_Book_Genre">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Invoice" Association="Self.FK_Book_Invoice">
+            <End Role="Invoice" EntitySet="Invoice" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Publishing_House" Association="Self.FK_Book_Publishing_House">
+            <End Role="Publishing_House" EntitySet="Publishing_House" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subscription_AnInstance" Association="Self.FK_Subscription_AnInstance">
+            <End Role="AnInstance" EntitySet="AnInstance" />
+            <End Role="Subscription" EntitySet="Subscription" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subscription_Reader" Association="Self.FK_Subscription_Reader">
+            <End Role="Reader" EntitySet="Reader" />
+            <End Role="Subscription" EntitySet="Subscription" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LibraryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Author">
+          <Key>
+            <PropertyRef Name="IDAuthor" />
+          </Key>
+          <Property Name="IDAuthor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Book" Relationship="Self.FK_Book_Author" FromRole="Author" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="IDBook" />
+          </Key>
+          <Property Name="IDBook" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDAuthor" Type="Int32" Nullable="false" />
+          <Property Name="IDPublishing" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="IDGenre" Type="Int32" Nullable="false" />
+          <Property Name="InventoryNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IDInvoice" Type="Int32" />
+          <Property Name="WriteOffCertificate" Type="Int32" />
+          <NavigationProperty Name="Author" Relationship="Self.FK_Book_Author" FromRole="Book" ToRole="Author" />
+          <NavigationProperty Name="Genre" Relationship="Self.FK_Book_Genre" FromRole="Book" ToRole="Genre" />
+          <NavigationProperty Name="Invoice" Relationship="Self.FK_Book_Invoice" FromRole="Book" ToRole="Invoice" />
+          <NavigationProperty Name="Publishing_House" Relationship="Self.FK_Book_Publishing_House" FromRole="Book" ToRole="Publishing_House" />
+          <NavigationProperty Name="AnInstance" Relationship="LibraryModel.FK_AnInstance_Book" FromRole="Book" ToRole="AnInstance" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="IDGenre" />
+          </Key>
+          <Property Name="IDGenre" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Genre1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Book" Relationship="Self.FK_Book_Genre" FromRole="Genre" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="IDInvoice" />
+          </Key>
+          <Property Name="IDInvoice" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumInvoice" Type="Int32" Nullable="false" />
+          <Property Name="Data" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Book" Relationship="Self.FK_Book_Invoice" FromRole="Invoice" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="Password">
+          <Key>
+            <PropertyRef Name="IDPassword" />
+          </Key>
+          <Property Name="IDPassword" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Publishing_House">
+          <Key>
+            <PropertyRef Name="IDPublishing" />
+          </Key>
+          <Property Name="IDPublishing" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PublishingHouse" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Book" Relationship="Self.FK_Book_Publishing_House" FromRole="Publishing_House" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="Reader">
+          <Key>
+            <PropertyRef Name="IDReader" />
+          </Key>
+          <Property Name="IDReader" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NumberTicket" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="HomeAdress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Subscription" Relationship="Self.FK_Subscription_Reader" FromRole="Reader" ToRole="Subscription" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="IDStatus" />
+          </Key>
+          <Property Name="IDStatus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="AnInstance" Relationship="LibraryModel.FK_AnInstance_Status" FromRole="Status" ToRole="AnInstance" />
+        </EntityType>
+        <EntityType Name="Subscription">
+          <Key>
+            <PropertyRef Name="IDSubscription" />
+          </Key>
+          <Property Name="IDSubscription" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDReader" Type="Int32" Nullable="false" />
+          <Property Name="DateOfIssueOfTheBook" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SuggestedReturnDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RealReturnDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IDAnInstance" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Reader" Relationship="Self.FK_Subscription_Reader" FromRole="Subscription" ToRole="Reader" />
+          <NavigationProperty Name="AnInstance" Relationship="LibraryModel.FK_Subscription_AnInstance" FromRole="Subscription" ToRole="AnInstance" />
+        </EntityType>
+        <Association Name="FK_Book_Author">
+          <End Role="Author" Type="Self.Author" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Author">
+              <PropertyRef Name="IDAuthor" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="IDAuthor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Genre">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="IDGenre" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="IDGenre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Invoice">
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invoice">
+              <PropertyRef Name="IDInvoice" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="IDInvoice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Publishing_House">
+          <End Role="Publishing_House" Type="Self.Publishing_House" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publishing_House">
+              <PropertyRef Name="IDPublishing" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="IDPublishing" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subscription_Reader">
+          <End Role="Reader" Type="Self.Reader" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Subscription" Type="Self.Subscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reader">
+              <PropertyRef Name="IDReader" />
+            </Principal>
+            <Dependent Role="Subscription">
+              <PropertyRef Name="IDReader" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LibraryEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Author" EntityType="Self.Author" />
+          <EntitySet Name="Book" EntityType="Self.Book" />
+          <EntitySet Name="Genre" EntityType="Self.Genre" />
+          <EntitySet Name="Invoice" EntityType="Self.Invoice" />
+          <EntitySet Name="Password" EntityType="Self.Password" />
+          <EntitySet Name="Publishing_House" EntityType="Self.Publishing_House" />
+          <EntitySet Name="Reader" EntityType="Self.Reader" />
+          <EntitySet Name="Status" EntityType="Self.Status" />
+          <EntitySet Name="Subscription" EntityType="Self.Subscription" />
+          <AssociationSet Name="FK_Book_Author" Association="Self.FK_Book_Author">
+            <End Role="Author" EntitySet="Author" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Genre" Association="Self.FK_Book_Genre">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Invoice" Association="Self.FK_Book_Invoice">
+            <End Role="Invoice" EntitySet="Invoice" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Publishing_House" Association="Self.FK_Book_Publishing_House">
+            <End Role="Publishing_House" EntitySet="Publishing_House" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subscription_Reader" Association="Self.FK_Subscription_Reader">
+            <End Role="Reader" EntitySet="Reader" />
+            <End Role="Subscription" EntitySet="Subscription" />
+          </AssociationSet>
+          <EntitySet Name="AnInstance" EntityType="LibraryModel.AnInstance" />
+          <AssociationSet Name="FK_AnInstance_Book" Association="LibraryModel.FK_AnInstance_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="AnInstance" EntitySet="AnInstance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AnInstance_Status" Association="LibraryModel.FK_AnInstance_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="AnInstance" EntitySet="AnInstance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subscription_AnInstance" Association="LibraryModel.FK_Subscription_AnInstance">
+            <End Role="AnInstance" EntitySet="AnInstance" />
+            <End Role="Subscription" EntitySet="Subscription" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AnInstance">
+          <Key>
+            <PropertyRef Name="IDAnInstance" />
+          </Key>
+          <Property Name="IDAnInstance" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDStatus" Type="Int32" Nullable="false" />
+          <Property Name="InventoryNum" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IDBook" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Book" Relationship="LibraryModel.FK_AnInstance_Book" FromRole="AnInstance" ToRole="Book" />
+          <NavigationProperty Name="Status" Relationship="LibraryModel.FK_AnInstance_Status" FromRole="AnInstance" ToRole="Status" />
+          <NavigationProperty Name="Subscription" Relationship="LibraryModel.FK_Subscription_AnInstance" FromRole="AnInstance" ToRole="Subscription" />
+        </EntityType>
+        <Association Name="FK_AnInstance_Book">
+          <End Type="LibraryModel.Book" Role="Book" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="LibraryModel.AnInstance" Role="AnInstance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="IDBook" />
+            </Principal>
+            <Dependent Role="AnInstance">
+              <PropertyRef Name="IDBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AnInstance_Status">
+          <End Type="LibraryModel.Status" Role="Status" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="LibraryModel.AnInstance" Role="AnInstance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="IDStatus" />
+            </Principal>
+            <Dependent Role="AnInstance">
+              <PropertyRef Name="IDStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subscription_AnInstance">
+          <End Type="LibraryModel.AnInstance" Role="AnInstance" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="LibraryModel.Subscription" Role="Subscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnInstance">
+              <PropertyRef Name="IDAnInstance" />
+            </Principal>
+            <Dependent Role="Subscription">
+              <PropertyRef Name="IDAnInstance" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище LibraryModelContainer" CdmEntityContainer="LibraryEntities">
+          <EntitySetMapping Name="Author">
+            <EntityTypeMapping TypeName="LibraryModel.Author">
+              <MappingFragment StoreEntitySet="Author">
+                <ScalarProperty Name="IDAuthor" ColumnName="IDAuthor" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Book">
+            <EntityTypeMapping TypeName="LibraryModel.Book">
+              <MappingFragment StoreEntitySet="Book">
+                <ScalarProperty Name="IDBook" ColumnName="IDBook" />
+                <ScalarProperty Name="IDAuthor" ColumnName="IDAuthor" />
+                <ScalarProperty Name="IDPublishing" ColumnName="IDPublishing" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="IDGenre" ColumnName="IDGenre" />
+                <ScalarProperty Name="InventoryNum" ColumnName="InventoryNum" />
+                <ScalarProperty Name="IDInvoice" ColumnName="IDInvoice" />
+                <ScalarProperty Name="WriteOffCertificate" ColumnName="WriteOffCertificate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genre">
+            <EntityTypeMapping TypeName="LibraryModel.Genre">
+              <MappingFragment StoreEntitySet="Genre">
+                <ScalarProperty Name="IDGenre" ColumnName="IDGenre" />
+                <ScalarProperty Name="Genre1" ColumnName="Genre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Invoice">
+            <EntityTypeMapping TypeName="LibraryModel.Invoice">
+              <MappingFragment StoreEntitySet="Invoice">
+                <ScalarProperty Name="IDInvoice" ColumnName="IDInvoice" />
+                <ScalarProperty Name="NumInvoice" ColumnName="NumInvoice" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Password">
+            <EntityTypeMapping TypeName="LibraryModel.Password">
+              <MappingFragment StoreEntitySet="Password">
+                <ScalarProperty Name="IDPassword" ColumnName="IDPassword" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password1" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Publishing_House">
+            <EntityTypeMapping TypeName="LibraryModel.Publishing_House">
+              <MappingFragment StoreEntitySet="Publishing_House">
+                <ScalarProperty Name="IDPublishing" ColumnName="IDPublishing" />
+                <ScalarProperty Name="PublishingHouse" ColumnName="PublishingHouse" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reader">
+            <EntityTypeMapping TypeName="LibraryModel.Reader">
+              <MappingFragment StoreEntitySet="Reader">
+                <ScalarProperty Name="IDReader" ColumnName="IDReader" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="NumberTicket" ColumnName="NumberTicket" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="HomeAdress" ColumnName="HomeAdress" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="LibraryModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="IDStatus" ColumnName="IDStatus" />
+                <ScalarProperty Name="Status1" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subscription">
+            <EntityTypeMapping TypeName="LibraryModel.Subscription">
+              <MappingFragment StoreEntitySet="Subscription">
+                <ScalarProperty Name="IDSubscription" ColumnName="IDSubscription" />
+                <ScalarProperty Name="IDReader" ColumnName="IDReader" />
+                <ScalarProperty Name="DateOfIssueOfTheBook" ColumnName="DateOfIssueOfTheBook" />
+                <ScalarProperty Name="SuggestedReturnDate" ColumnName="SuggestedReturnDate" />
+                <ScalarProperty Name="RealReturnDate" ColumnName="RealReturnDate" />
+                <ScalarProperty Name="IDAnInstance" ColumnName="IDAnInstance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AnInstance">
+            <EntityTypeMapping TypeName="LibraryModel.AnInstance">
+              <MappingFragment StoreEntitySet="AnInstance">
+                <ScalarProperty Name="IDBook" ColumnName="IDBook" />
+                <ScalarProperty Name="InventoryNum" ColumnName="InventoryNum" />
+                <ScalarProperty Name="IDStatus" ColumnName="IDStatus" />
+                <ScalarProperty Name="IDAnInstance" ColumnName="IDAnInstance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

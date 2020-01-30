@@ -1,0 +1,123 @@
+﻿<Window x:Class="Prism_Library.Views.Subscription.Utility.GiveModalView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Prism_Library.Views.Subscription.Utility"
+        mc:Ignorable="d"
+        
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        
+        Title="{Binding Title}" Height="330" Width="350">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="200*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="100*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Order №"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"/>
+
+        <TextBlock  Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="10" 
+                    Text="{Binding Order, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <TextBlock Text="Reader:"
+                   Grid.Row="1"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"/>
+
+        <ComboBox  Grid.Row="1"
+                   Grid.Column="1"
+                   Margin="10" VerticalAlignment="Stretch"
+                   ItemsSource="{Binding ReaderSearch, UpdateSourceTrigger=PropertyChanged}"
+                   SelectedItem="{Binding SelectedReader ,Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}">
+
+            <ComboBox.ItemTemplate>
+                <DataTemplate DataType="Reader">
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{1}   {0}">
+                                <Binding Path="Name"/>
+                                <Binding Path="Surname"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <TextBlock Text="Date of issue:"
+                   Grid.Row="2"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"/>
+
+        <DatePicker  Grid.Row="2"
+                     Grid.Column="1"
+                     Margin="10"                     
+                     Text="{Binding DateOfIssue, Mode=TwoWay}"
+                     Language="ua-UA"/>
+
+        <TextBlock Text="Offer date:"
+                   Grid.Row="3"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"/>
+
+        <DatePicker  Grid.Row="3"
+                     Grid.Column="1"
+                     Margin="10"
+                     Text="{Binding OfferDate, Mode=TwoWay}"
+                     Language="ua-UA"/>
+        
+        <TextBlock Text="Inventory №"
+                   Grid.Row="4"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"/>
+
+        <TextBlock  Grid.Row="4"
+                    Grid.Column="1"
+                    Margin="10" 
+                    Text="{Binding Inventory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <Grid Grid.Row="5"
+              Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="100*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Content="Give book"
+                    Grid.Column="0"
+                    Style="{DynamicResource MaterialDesignFlatButton}" 
+                    Foreground="#FFEEEEEE"
+                    Margin="0 10"
+                    Command="{Binding AddCommand}"/>
+
+            <Button Content="Clear"
+                    Grid.Column="1"
+                    Style="{DynamicResource MaterialDesignFlatButton}" 
+                    Foreground="#FFEEEEEE"
+                    Margin="0 10"
+                    Command="{Binding DeleteCommand}"/>
+        </Grid>
+    </Grid>
+</Window>
